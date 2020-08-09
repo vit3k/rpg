@@ -4,9 +4,11 @@ return {
 	processEntity = function(self, entity, deltaTime)
 		local input = entity:get(Components.Input)
 		--local velocity = entity:get(Components.Velocity)
+		local animation = entity:get(Components.Animation)
 
 		if Input.isActionPressed("move_up") then
 			print("test")
+			animation:play("move_up")
 		end
 	end
 }

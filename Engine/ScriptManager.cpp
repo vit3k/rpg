@@ -5,6 +5,7 @@
 #include "EntitySystem/ClassTypeId.h"
 #include <algorithm>
 #include "Input.h"
+#include "../Components/SpriteComponent.h"
 
 ScriptManager::ScriptManager()
 {
@@ -51,7 +52,9 @@ void ScriptManager::subscribe(EntitySystem::TypeId eventTypeId, sol::function li
 EntitySystem::EntitySp ScriptManager::createEntity(sol::table entityData)
 {
 	auto entity = EntitySystem::Entity::create();
+
 	entityData.for_each([entity, this](sol::object key, sol::object value) {
+
 		auto componentName = key.as<std::string>();
 		if (componentName == "transform")
 		{
@@ -104,6 +107,39 @@ EntitySystem::EntitySp ScriptManager::createEntity(sol::table entityData)
 			auto table = value.as<sol::table>();
 			entity->attach<PhysicsComponent>(table["bounciness"], table["mass"], Vector2(table["constraints"]["x"], table["constraints"]["y"]));
 		}
+		else if (componentName == "sprite")
+        {
+		    auto spriteSheetsTable = value.as<sol::table>().get<sol::table>("spritesheets");
+            std::map<std::string, std::shared_ptr<Spritesheet>> spriteSheets;
+            spriteSheetsTable.for_each([&](sol::object key, sol::object value) {
+                auto spriteSheetTable = value.as<sol::table>();
+                auto name = key.as<std::string>();
+
+                spriteSheets[name] =
+                        std::make_shared<Spritesheet>(spriteSheetTable["spritesCount"],
+                                    Vector2(spriteSheetTable["spriteSize"]["x"], spriteSheetTable["spriteSize"]["y"]),
+                                    spriteSheetTable["texture"]);
+            });
+
+            entity->attach<SpriteComponent>(spriteSheets);
+        }
+		else if (componentName == "animation")
+        {
+            auto table = value.as<sol::table>();
+            auto animationsTable = table.get<sol::table>("animations");
+            std::map<std::string, std::shared_ptr<Animation>> animations;
+            animationsTable.for_each([&](sol::object key, sol::object value){
+                auto animationTable = value.as<sol::table>();
+                auto name = key.as<std::string>();
+
+                animations[name] = std::make_shared<Animation>(animationTable["spritesheet"],
+                                                                    animationTable["fps"],
+                                                                    animationTable.get<std::vector<int>>("frames"),
+                                                                    animationTable["loop"]);
+            });
+            auto currentAnimation = table.get_or<std::string>("currentAnimation", "");
+            entity->attach<AnimationComponent>(animations, currentAnimation);
+        }
 		else
 		{
 			auto componentNameCase = componentName;
@@ -227,6 +263,8 @@ void ScriptManager::init()
 		"invertedMass", &PhysicsComponent::invertedMass,
 		sol::base_classes, sol::bases<EntitySystem::Component>()
 		);
+    lua.new_usertype<AnimationComponent>("AnimationComponent",
+        "play", &AnimationComponent::play);
 
 	lua.new_usertype<Input>("Input",
         "isActionPressed", Input::isActionPressed);
@@ -244,7 +282,8 @@ void ScriptManager::init()
 	lua.new_usertype<EntitySystem::TypeId>("TypeId");
 
 	lua["Events"] = lua.create_table_with(
-            "Collision", EntitySystem::EventTypeId<CollisionEvent>()
+            "Collision", EntitySystem::EventTypeId<CollisionEvent>(),
+            "Started", EntitySystem::EventTypeId<StartedEvent>()
 	);
 
 	auto eventsMetatable = lua.create_table();
@@ -257,7 +296,9 @@ void ScriptManager::init()
             "Render", EntitySystem::ComponentTypeId<RenderComponent>(),
             "Collision", EntitySystem::ComponentTypeId<CollisionComponent>(),
             "Physics", EntitySystem::ComponentTypeId<PhysicsComponent>(),
-            "Velocity", EntitySystem::ComponentTypeId<VelocityComponent>()
+            "Velocity", EntitySystem::ComponentTypeId<VelocityComponent>(),
+            "Sprite", EntitySystem::ComponentTypeId<SpriteComponent>(),
+            "Animation", EntitySystem::ComponentTypeId<AnimationComponent>()
 	);
 
 	auto metatable = lua.create_table();

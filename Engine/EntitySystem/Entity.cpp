@@ -1,5 +1,6 @@
 #include "Entity.h"
 #include "../Components.h"
+#include "../../Components/SpriteComponent.h"
 
 namespace EntitySystem {
 	int Entity::currentEntityId = 0;
@@ -30,6 +31,10 @@ namespace EntitySystem {
 			{
 				return sol::make_object(lua, std::static_pointer_cast<VelocityComponent>(components[component]));
 			}
+            else if (component == ComponentTypeId <AnimationComponent>())
+            {
+                return sol::make_object(lua, std::static_pointer_cast<AnimationComponent>(components[component]));
+            }
 		}
 		else
 		{

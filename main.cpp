@@ -11,10 +11,11 @@
 #include <algorithm>
 #include "Engine/ScriptManager.h"
 #include "Engine/Input.h"
+#include "Engine/AnimationSystem.h"
 
 int main()
 {
-    sf::Texture skeletonTexture ;
+    sf::Texture skeletonTexture;
     skeletonTexture.loadFromFile("Resources/Skeleton Idle.png");
 
 	sf::RenderWindow window(sf::VideoMode(1600, 1200), "Pong");
@@ -22,6 +23,7 @@ int main()
 
 	std::shared_ptr<RenderSystem> renderSystem(new RenderSystem(&window));
 	std::shared_ptr<TextRenderingSystem> textRenderingSystem(new TextRenderingSystem(&window));
+	std::shared_ptr<AnimationSystem> animationSystem(new AnimationSystem());
 
 	auto collisionSystem = std::make_shared<CollisionSystem>();
 	auto physicsSystem = std::make_shared<PhysicsSystem>();
@@ -51,8 +53,9 @@ int main()
 		}
 
 		EntitySystem::Time delta(timer.restart().asMicroseconds());
+		EntitySystem::Time::Elapsed += delta;
 		auto fps = 1. / delta.asSeconds();
-		fpsText->get<TextComponent>()->text = std::to_string(fps);
+		fpsText->get<TextComponent>()->text = std::to_string(EntitySystem::Time::Elapsed.asSeconds());
 
 		//event bus before scripts
 		EntitySystem::EventDispatcher::get().process();
@@ -65,6 +68,8 @@ int main()
 
 		collisionSystem->Process(delta);
 		physicsSystem->Process(delta);
+
+		animationSystem->Process(delta);
 
 		//rendering pipeline
 		window.clear();

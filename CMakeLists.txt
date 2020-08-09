@@ -26,7 +26,7 @@ add_executable(Rpg main.cpp Engine/Collider.cpp Engine/Input.cpp
         Engine/CollisionSystem.cpp Engine/PhysicsSystem.cpp Engine/RenderSystem.cpp Engine/ScriptManager.cpp
         Engine/TextRenderingSystem.cpp Engine/EntitySystem/Component.cpp Engine/EntitySystem/Entity.cpp Engine/EntitySystem/EventDispatcher.cpp
         Engine/EntitySystem/System.cpp
-        Engine/Vector2.h Components/SpriteComponent.h Engine/AssetManager.cpp Engine/AssetManager.h)
+        Engine/Vector2.h Components/SpriteComponent.h Engine/AssetManager.cpp Engine/AssetManager.h Engine/Texture.cpp Engine/Texture.h Engine/AnimationSystem.cpp Engine/AnimationSystem.h Engine/EntitySystem/Time.cpp)
 
 set_property(TARGET Rpg PROPERTY CXX_STANDARD 17)
 target_compile_definitions(Rpg PUBLIC SFML_STATIC)
