@@ -6,10 +6,13 @@
 #define RPG_ANIMATIONSYSTEM_H
 
 
-#include "../Components/SpriteComponent.h"
+#include "Components/SpriteComponent.h"
+
 #include "EntitySystem/System.h"
+#include "Components/AnimationComponent.h"
 
 class AnimationSystem : public EntitySystem::System<AnimationComponent, SpriteComponent>{
+    Logger logger = Logger::get("AnimationSystem");
 public:
     void ProcessEntity(EntitySystem::EntitySp entity, EntitySystem::Time deltaTime);
 };

@@ -13,8 +13,7 @@ enum ShapeType {
 class TransformComponent : public EntitySystem::Component {
 public:
 	Vector2 position;
-	TransformComponent(Vector2 position) : position(position) {}
-
+	explicit TransformComponent(Vector2 position) : position(position) {}
 };
 
 typedef std::shared_ptr<TransformComponent> TransformComponentSp;

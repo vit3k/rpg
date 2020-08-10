@@ -5,7 +5,8 @@
 #include "EntitySystem/ClassTypeId.h"
 #include <algorithm>
 #include "Input.h"
-#include "../Components/SpriteComponent.h"
+#include "Components/SpriteComponent.h"
+#include "Components/AnimationComponent.h"
 
 ScriptManager::ScriptManager()
 {
@@ -265,9 +266,8 @@ void ScriptManager::init()
 		);
     lua.new_usertype<AnimationComponent>("AnimationComponent",
         "play", &AnimationComponent::play);
-
-	lua.new_usertype<Input>("Input",
-        "isActionPressed", Input::isActionPressed);
+    lua.new_usertype<SpriteComponent>("SpriteComponent",
+        "flipY", &SpriteComponent::flipY);
 
 	lua.new_enum("sfColor",
 		"Green", sf::Color::Green,
@@ -315,7 +315,13 @@ void ScriptManager::init()
 		"Up", sf::Keyboard::Key::Up,
 		"Down", sf::Keyboard::Key::Down,
 		"W", sf::Keyboard::Key::W,
-		"S", sf::Keyboard::Key::S);
+		"S", sf::Keyboard::Key::S,
+		"A", sf::Keyboard::Key::A,
+		"D", sf::Keyboard::Key::D);
+
+    lua.new_usertype<Input>("Input",
+        "isActionPressed", Input::isActionPressed,
+        "defineAction", Input::defineAction);
 
 	sol::table glmTable = lua.create_named_table("glm");
 	glmTable.set_function("normalize", &ScriptManager::glmNormalize, this);

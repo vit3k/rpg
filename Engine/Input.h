@@ -10,4 +10,5 @@ class Input {
     public:
         static bool isActionPressed(std::string actionName);
         static void init();
+        static void defineAction(const std::string& actionName, sf::Keyboard::Key key);
 };
