@@ -84,7 +84,7 @@ namespace EntitySystem
 		{
 			args.for_each([this](sol::object key, sol::object value)
 			{
-				logger.log("adding component to system list : " + std::to_string(value.as<TypeId>()));
+				//logger.log("adding component to system list : " + std::to_string(value.as<TypeId>()));
 				components.set(value.as<TypeId>());
 			});
 		}

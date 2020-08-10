@@ -1,6 +1,10 @@
 #pragma once
+
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/Font.hpp>
 #include "EntitySystem/System.h"
-#include "Components.h"
+#include "Components/TransformComponent.h"
+#include "Components/TextComponent.h"
 
 class TextRenderingSystem : public EntitySystem::System<TransformComponent, TextComponent>
 {

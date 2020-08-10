@@ -1,6 +1,7 @@
 #include "PhysicsSystem.h"
 #include "EntitySystem/EventDispatcher.h"
 #include "EntitySystem/Entity.h"
+#include "Components/VelocityComponent.h"
 #include <sstream>
 
 using namespace EntitySystem;

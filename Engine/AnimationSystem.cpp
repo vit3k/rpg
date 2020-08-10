@@ -33,3 +33,7 @@ void AnimationSystem::ProcessEntity(EntitySystem::EntitySp entity, EntitySystem:
         }
     }
 }
+
+std::string AnimationSystem::getName() {
+    return "AnimationSystem";
+}

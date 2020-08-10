@@ -1,5 +1,5 @@
 #include "Collider.h"
-#include "Components.h"
+#include "Components/CollisionComponent.h"
 #include <cmath>
 
 Collision Collider::sat(EntitySystem::EntitySp entity1, EntitySystem::EntitySp entity2, std::vector<Vector2> axes) {

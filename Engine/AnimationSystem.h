@@ -15,6 +15,9 @@ class AnimationSystem : public EntitySystem::System<AnimationComponent, SpriteCo
     Logger logger = Logger::get("AnimationSystem");
 public:
     void ProcessEntity(EntitySystem::EntitySp entity, EntitySystem::Time deltaTime);
+
+protected:
+    std::string getName() override;
 };
 
 #endif //RPG_ANIMATIONSYSTEM_H

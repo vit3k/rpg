@@ -1,5 +1,4 @@
 #include "ScriptManager.h"
-#include "Components.h"
 #include "../Event.h"
 #include "CollisionSystem.h"
 #include "EntitySystem/ClassTypeId.h"
@@ -7,6 +6,9 @@
 #include "Input.h"
 #include "Components/SpriteComponent.h"
 #include "Components/AnimationComponent.h"
+#include "Components/TextComponent.h"
+#include "Components/VelocityComponent.h"
+#include "Components/PhysicsComponent.h"
 
 ScriptManager::ScriptManager()
 {
@@ -66,7 +68,7 @@ EntitySystem::EntitySp ScriptManager::createEntity(sol::table entityData)
 		{
 			entity->attach<TextComponent>(value.as<std::string>());
 		}
-		else if (componentName == "render")
+		/*else if (componentName == "render")
 		{
 			auto shapeTable = value.as<sol::table>()["shape"];
 			if (shapeTable["type"] == Rectangle)
@@ -82,7 +84,7 @@ EntitySystem::EntitySp ScriptManager::createEntity(sol::table entityData)
 				shape->setFillColor(shapeTable["color"]);
 				entity->attach<RenderComponent>(std::static_pointer_cast<sf::Shape>(shape));
 			}
-		}
+		}*/
 		else if (componentName == "velocity")
 		{
 			auto table = value.as<sol::table>();
@@ -222,11 +224,11 @@ void ScriptManager::init()
 		sol::base_classes, sol::base_list<sf::Shape>()
 		);
 
-	lua.new_usertype<RenderComponent>("RenderComponent",
+	/*lua.new_usertype<RenderComponent>("RenderComponent",
 		sol::constructors<RenderComponent(std::shared_ptr<sf::Shape>)>(),
 		sol::base_classes, sol::bases<EntitySystem::Component>()
 
-		);
+		);*/
 
 	lua.new_usertype<VelocityComponent>("VelocityComponent",
 		sol::constructors<VelocityComponent(Vector2, float)>(),
@@ -293,7 +295,6 @@ void ScriptManager::init()
 	lua["Components"] = lua.create_table_with(
             "Transform", EntitySystem::ComponentTypeId<TransformComponent>(),
             "Text", EntitySystem::ComponentTypeId<TextComponent>(),
-            "Render", EntitySystem::ComponentTypeId<RenderComponent>(),
             "Collision", EntitySystem::ComponentTypeId<CollisionComponent>(),
             "Physics", EntitySystem::ComponentTypeId<PhysicsComponent>(),
             "Velocity", EntitySystem::ComponentTypeId<VelocityComponent>(),

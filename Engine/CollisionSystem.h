@@ -1,10 +1,11 @@
 #pragma once
 #include "EntitySystem/System.h"
-#include "Components.h"
 #include "Collider.h"
 #include "../Event.h"
 #include "Logger.h"
 #include "EntitySystem/Entity.h"
+#include "Components/TransformComponent.h"
+#include "Components/CollisionComponent.h"
 #include <memory>
 
 typedef std::pair<ShapeType, ShapeType> ColliderType;

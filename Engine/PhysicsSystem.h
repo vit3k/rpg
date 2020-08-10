@@ -1,8 +1,8 @@
 #pragma once
 #include "EntitySystem/System.h"
-#include "Components.h"
 #include "EntitySystem/Time.h"
 #include "CollisionSystem.h"
+#include "Components/PhysicsComponent.h"
 
 class PhysicsSystem : public EntitySystem::System<TransformComponent, PhysicsComponent, CollisionComponent>
 {

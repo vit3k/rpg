@@ -11,7 +11,7 @@ function game:init()
 
 	print('game init')
 	local player = createEntity({
-			transform = { x = 0, y = 0 },
+			transform = { x = 0, y = 800 },
 			player = {},
 			velocity = {
 				velocity = { x = 0, y = 0}

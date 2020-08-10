@@ -1,3 +1,4 @@
+#include <SFML/Graphics/Text.hpp>
 #include "TextRenderingSystem.h"
 
 void TextRenderingSystem::ProcessEntity(EntitySystem::EntitySp entity, EntitySystem::Time deltaTime)

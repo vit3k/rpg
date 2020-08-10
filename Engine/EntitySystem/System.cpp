@@ -1,5 +1,4 @@
 #include "System.h"
-#include "../Components.h"
 
 namespace EntitySystem {
 	void BaseSystem::ProcessEntity(EntitySp entity, Time deltaTime)

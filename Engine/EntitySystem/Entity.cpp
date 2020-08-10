@@ -1,7 +1,10 @@
 #include "Entity.h"
-#include "../Components.h"
 #include "../Components/SpriteComponent.h"
 #include "../Components/AnimationComponent.h"
+#include "../Components/TextComponent.h"
+#include "../Components/TransformComponent.h"
+#include "../Components/CollisionComponent.h"
+#include "../Components/VelocityComponent.h"
 
 namespace EntitySystem {
 	int Entity::currentEntityId = 0;

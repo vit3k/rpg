@@ -2,7 +2,6 @@
 #include <bitset>
 
 #include "Engine/EntitySystem/Entity.h"
-#include "Engine/Components.h"
 #include "Engine/RenderSystem.h"
 #include "Engine/TextRenderingSystem.h"
 #include "Engine/EntitySystem/EventDispatcher.h"
@@ -12,6 +11,7 @@
 #include "Engine/ScriptManager.h"
 #include "Engine/Input.h"
 #include "Engine/AnimationSystem.h"
+#include "Engine/Components/TextComponent.h"
 
 int main()
 {
