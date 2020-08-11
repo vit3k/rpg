@@ -14,6 +14,9 @@ return {
             velocity.velocity.x = -100
             animation:play('walk')
             sprite.flipY = true
+        elseif Input.isActionPressed('attack') then
+            --couroutine.yield()
+
         else
             velocity.velocity.x = 0
             animation:play('idle')

@@ -48,6 +48,7 @@ namespace EntitySystem {
 		{
 			return scriptComponents[component];
 		}
+		return nullptr;
 	}
 
 	bool Entity::scriptHas(TypeId component)

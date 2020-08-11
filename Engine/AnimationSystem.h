@@ -14,7 +14,7 @@
 class AnimationSystem : public EntitySystem::System<AnimationComponent, SpriteComponent>{
     Logger logger = Logger::get("AnimationSystem");
 public:
-    void ProcessEntity(EntitySystem::EntitySp entity, EntitySystem::Time deltaTime);
+    void ProcessEntity(EntitySystem::EntitySp entity, EntitySystem::Time deltaTime) override;
 
 protected:
     std::string getName() override;

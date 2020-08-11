@@ -35,13 +35,13 @@ function game:init()
 					idle = {
 						spritesheet = 'idle',
 						frames = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
-						fps = 11,
+						fps = 15,
 						loop = true
 					},
 					walk = {
 						spritesheet = 'walk',
 						frames = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12},
-						fps = 13,
+						fps = 15,
 						loop = true
 					}
 				},
